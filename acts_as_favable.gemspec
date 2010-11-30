@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
              "init.rb", 
              "install.rb"]
   s.has_rdoc = false
-  s.homepage = %q{#}
+  s.homepage = %q{https://github.com/yorzi/acts_as_favable}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Plugin/gem that provides favorite functionality}
