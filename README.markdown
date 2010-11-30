@@ -5,16 +5,16 @@ Allows for favorite refer to be added to multiple and different models.
 
 ## Resources
 
-####Install(Rails3)
+####Install(on Rails3)
 
-   * To install as a plugin
+ To install as a plugin
+ 
     rails plugin install http://github.com/yorzi/acts_as_favable.git
    
+ To install as a gem
 
-   * To install as a gem
     sudo gem install acts_as_favable
-   
- 
+
  Generate your favorite model:
  
     rails generate favorite
