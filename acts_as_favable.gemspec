@@ -1,15 +1,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{acts_as_favable}
-  s.version = "1.0.1"
+  s.name = 'acts_as_favable'
+  s.version = "2.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Wang"]
-  s.autorequire = %q{acts_as_favable}
-  s.date = %q{2010-11-29}
-  s.description = %q{Plugin/Gem that provides favorites functionality}
-  s.email = %q{wangyaodi@gmail.com}
+  s.date = Time.now.strftime('%Y-%m-%d')
+  s.description = 'Plugin/Gem that provides favorites functionality'
+  s.email = 'wangyaodi@gmail.com'
   s.extra_rdoc_files = ["README.markdown", "MIT-LICENSE"]
   s.files = ["MIT-LICENSE", 
              "README.markdown", 
@@ -24,19 +23,14 @@ Gem::Specification.new do |s|
              "lib/generators/favorite/templates/create_favorites.rb", 
              "init.rb", 
              "install.rb"]
-  s.has_rdoc = false
-  s.homepage = %q{https://github.com/yorzi/acts_as_favable}
+  s.homepage = 'https://github.com/yorzi/acts_as_favable'
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Plugin/gem that provides favorite functionality}
-
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 1
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
+  s.summary = 'Plugin/gem that provides favorite functionality'
+  s.required_ruby_version = '>= 2.6.0'
+  
+  s.add_dependency 'activerecord', '>= 6.0', '< 9.0'
+  s.add_dependency 'activesupport', '>= 6.0', '< 9.0'
+  
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rails', '>= 6.0', '< 9.0'
 end

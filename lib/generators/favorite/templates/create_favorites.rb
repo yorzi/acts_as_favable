@@ -1,18 +1,10 @@
-class CreateFavorites < ActiveRecord::Migration
-  def self.up
+class CreateFavorites < ActiveRecord::Migration[8.0]
+  def change
     create_table :favorites do |t|
-      t.string :note, :limit => 50, :default => "" 
-      t.references :favable, :polymorphic => true
-      t.references :user
+      t.string :note, limit: 50, default: "" 
+      t.references :favable, polymorphic: true, index: true
+      t.references :user, index: true
       t.timestamps
     end
-
-    add_index :favorites, :favable_type
-    add_index :favorites, :favable_id
-    add_index :favorites, :user_id
-  end
-
-  def self.down
-    drop_table :favorites
   end
 end
