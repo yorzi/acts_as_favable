@@ -8,6 +8,6 @@ end
 gem "rails", "~> #{rails_version}.0"
 
 group :development, :test do
-  gem "minitest", "~> 5.0"
+  gem "minitest", "~> 6.0"
   gem "sqlite3", ">= 1.7", "< 3.0"
 end
