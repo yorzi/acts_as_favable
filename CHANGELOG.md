@@ -4,10 +4,11 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+- Establish Rails 7.2 as the minimum supported Rails version; compatibility with it is intentional and covered by CI.
+- Define the generated `Favorite#user` association as optional by project policy, with a nullable `user_id` column.
 - Modernize Active Record integration with `ActiveSupport.on_load` and `ActiveSupport::Concern`.
 - Preserve the public `acts_as_favable` and `Favorite.find_*` APIs while using Rails' own polymorphic naming APIs for STI and namespaced models.
 - Make the generator emit the migration version for the Rails version that is actually running instead of hard-coding Rails 8.0.
-- Keep the generated `user` association optional to preserve historical behavior and align it with a nullable `user_id` column.
 - Require a polymorphic favorite target in newly generated migrations.
 - Remove the generated `default_scope`; use `recent` and `in_order` explicitly.
 - Add real Active Record behavior tests and generator coverage.

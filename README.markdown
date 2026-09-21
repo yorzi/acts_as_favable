@@ -7,13 +7,17 @@ The gem keeps its original API while modernizing the integration for current Rai
 
 ## Compatibility
 
+The minimum supported Rails version is **Rails 7.2**.
+
 The project is tested against:
 
-- Ruby 3.1 with Rails 7.2 (legacy compatibility)
+- Ruby 3.1 with Rails 7.2
 - Ruby 3.2 with Rails 8.0
 - Ruby 3.2, 3.3, 3.4, and 4.0 with Rails 8.1
 
-Rails 8.1 is the primary current target. Rails 7.2 remains in CI to make upgrades from older applications easier, but production applications should follow the upstream Rails maintenance policy and stay on a supported Rails release.
+Rails 8.1 is the primary current target, while Rails 7.2 is an intentionally supported compatibility floor rather than a best-effort legacy lane. Changes to the gem should continue to preserve Rails 7.2 compatibility unless the minimum supported version is explicitly raised in a future release.
+
+Applications should still follow the upstream Rails maintenance policy when choosing a production Rails version.
 
 ## Installation
 
@@ -50,7 +54,26 @@ article = Article.find(1)
 article.favorites.create!(note: "Read this again")
 ```
 
-The generated `Favorite` model keeps `user` optional for compatibility with the gem's historical behavior:
+### Optional user association
+
+The generated `Favorite` model intentionally defines `user` as optional:
+
+```ruby
+class Favorite < ApplicationRecord
+  include ActsAsFavable::Favorite
+
+  belongs_to :favable, polymorphic: true
+  belongs_to :user, optional: true
+end
+```
+
+This is the default gem policy. A favorite can exist without a user:
+
+```ruby
+article.favorites.create!(note: "Read this again")
+```
+
+Applications that associate favorites with users can still pass one normally:
 
 ```ruby
 article.favorites.create!(
@@ -59,7 +82,7 @@ article.favorites.create!(
 )
 ```
 
-If every favorite in your application must belong to a user, change the generated model to `belongs_to :user` and change the migration to make `user_id` non-null before running the migration.
+If every favorite in a particular application must belong to a user, that application can tighten the generated model to `belongs_to :user` and make `user_id` non-null in its migration before running it. The gem itself will continue to generate an optional user association by default.
 
 ## Querying favorites
 
@@ -102,7 +125,7 @@ app/models/favorite.rb
 db/migrate/<timestamp>_create_favorites.rb
 ```
 
-The migration creates indexed `favable_type`, `favable_id`, and `user_id` columns. The polymorphic target is required; the user reference is nullable by default.
+The migration creates indexed `favable_type`, `favable_id`, and `user_id` columns. The polymorphic target is required; `user_id` is nullable by design.
 
 ## Upgrading from older versions
 
@@ -121,13 +144,15 @@ bundle install
 bundle exec rake test
 ```
 
-Run against a specific Rails series:
+Run against a specific supported Rails series:
 
 ```bash
 RAILS_VERSION=7.2 bundle exec rake test
 RAILS_VERSION=8.0 bundle exec rake test
 RAILS_VERSION=8.1 bundle exec rake test
 ```
+
+Rails 7.2 is the compatibility floor and must remain represented in CI while it is a supported gem target.
 
 Build the gem locally:
 
