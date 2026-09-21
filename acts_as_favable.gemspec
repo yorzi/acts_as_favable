@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "source_code_uri" => spec.homepage,
     "bug_tracker_uri" => "#{spec.homepage}/issues",
-    "changelog_uri" => "#{spec.homepage}/blob/master/CHANGELOG.md"
+    "changelog_uri" => "#{spec.homepage}/blob/main/CHANGELOG.md"
   }
 
   spec.files = Dir.chdir(__dir__) do
