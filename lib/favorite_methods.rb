@@ -1,23 +1,25 @@
+require "active_support/concern"
+
 module ActsAsFavable
   module Favorite
-    
-    def self.included(favorite_model)
-      favorite_model.extend Finders
-      favorite_model.scope :in_order, -> { order('created_at ASC') }
-      favorite_model.scope :recent, -> { order('created_at DESC') }
+    extend ActiveSupport::Concern
+
+    included do
+      scope :in_order, -> { order(created_at: :asc) }
+      scope :recent, -> { order(created_at: :desc) }
     end
-    
-    module Finders
+
+    class_methods do
       def find_favorites_by_user(user)
-        where(["user_id = ?", user.id]).order("created_at DESC")
+        where(user_id: user.id).recent
       end
 
-      def find_favorites_for_favable(favable_str, favable_id)
-        where(["favable_type = ? and favable_id = ?", favable_str, favable_id]).order("created_at DESC")
+      def find_favorites_for_favable(favable_type, favable_id)
+        where(favable_type: favable_type, favable_id: favable_id).recent
       end
 
-      def find_favable(favable_str, favable_id)
-        favable_str.constantize.find(favable_id)
+      def find_favable(favable_type, favable_id)
+        ActiveRecord::Base.polymorphic_class_for(favable_type).find(favable_id)
       end
     end
   end

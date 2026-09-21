@@ -1,6 +1,9 @@
 Description:
-    Copies favorite.rb to app/models/.
-    Copies create_favorites.rb to db/migrate
+    Creates a Favorite model and a version-compatible favorites migration.
 
-Examples:
-    `rails generate favorite`
+Example:
+    bin/rails generate favorite
+
+Generated files:
+    app/models/favorite.rb
+    db/migrate/<timestamp>_create_favorites.rb

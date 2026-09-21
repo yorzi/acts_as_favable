@@ -1,1 +1,7 @@
-.svn
+.bundle/
+Gemfile.lock
+pkg/
+coverage/
+vendor/bundle/
+*.gem
+.DS_Store
