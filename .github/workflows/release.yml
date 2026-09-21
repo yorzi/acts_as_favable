@@ -2,8 +2,8 @@ name: Release gem
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
 
 permissions:
   contents: write
