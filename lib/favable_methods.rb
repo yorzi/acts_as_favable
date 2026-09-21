@@ -1,44 +1,37 @@
-require 'active_record'
+require "active_support/concern"
 
-module Acts #:nodoc:
-  module Favable #:nodoc:
+module Acts
+  module Favable
+    extend ActiveSupport::Concern
 
-    def self.included(base)
-      base.extend ClassMethods  
-    end
+    class_methods do
+      def acts_as_favable(options = {})
+        association_options = { as: :favable, dependent: :destroy }.merge(options)
+        has_many :favorites, **association_options
 
-    module ClassMethods
-      def acts_as_favable(options={})
-        has_many :favorites, as: :favable, dependent: :destroy, **options
         include Acts::Favable::InstanceMethods
         extend Acts::Favable::SingletonMethods
       end
     end
-    
+
     module SingletonMethods
-      def find_favorites_for(obj)
-        favable = self.name
-        Favorite.find_favorites_for_favable(favable, obj.id)
+      def find_favorites_for(record)
+        Favorite.find_favorites_for_favable(polymorphic_name, record.id)
       end
-      
-      def find_favorites_by_user(user) 
-        favable = self.name
-        Favorite.where(["user_id = ? and favable_type = ?", user.id, favable]).order("created_at DESC")
+
+      def find_favorites_by_user(user)
+        Favorite.where(user_id: user.id, favable_type: polymorphic_name).recent
       end
     end
-    
-    # This module contains instance methods
+
     module InstanceMethods
       def favorites_ordered_by_submitted
-        Favorite.find_favorites_for_favable(self.class.name, id)
+        Favorite.find_favorites_for_favable(self.class.polymorphic_name, id)
       end
 
       def add_favorite(favorite)
         favorites << favorite
       end
     end
-    
   end
 end
-
-ActiveRecord::Base.send(:include, Acts::Favable)
