@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+## 2.1.0 - 2026-09-21
+
 - Establish Rails 7.2 as the minimum supported Rails version; compatibility with it is intentional and covered by CI.
 - Define the generated `Favorite#user` association as optional by project policy, with a nullable `user_id` column.
 - Modernize Active Record integration with `ActiveSupport.on_load` and `ActiveSupport::Concern`.
@@ -15,6 +17,8 @@ All notable changes to this project are documented here.
 - Add GitHub Actions coverage for Rails 7.2, 8.0, and 8.1 across Ruby 3.1 through 4.0.
 - Modernize gem metadata, dependency bounds, packaging, and development documentation.
 - Remove obsolete Rails plugin entry points (`init.rb` and `install.rb`).
+- Upgrade CI checkout to `actions/checkout@v7`.
+- Keep Minitest 5 while Ruby 3.1 remains supported and document that compatibility constraint.
 
 ## 2.0.0 - 2025-07-28
 
