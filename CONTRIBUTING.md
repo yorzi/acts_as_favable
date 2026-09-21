@@ -19,6 +19,8 @@ bundle exec rake test
 
 The default development bundle uses Rails 8.1 on Ruby 3.2+ and Rails 7.2 on Ruby 3.1.
 
+Minitest remains on the 5.x series while Ruby 3.1 is part of the supported matrix. Minitest 6 requires Ruby 3.2+, so upgrading that test dependency would silently drop the Ruby 3.1 / Rails 7.2 compatibility lane. Dependabot is configured to ignore Minitest major-version updates until the Ruby minimum is explicitly raised.
+
 To exercise another supported Rails series explicitly:
 
 ```bash
